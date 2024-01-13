@@ -1,0 +1,31 @@
+Pushing code to AWS CodeCommit involves a series of steps: 
+
+1.Set Up AWS CLI: Before you can interact with AWS services, make sure you have the AWS Command Line Interface (CLI) installed and configured with the necessary AWS credentials. You can install and configure it by following the AWS CLI documentation.
+
+2.Open your terminal or command prompt.
+Use the git clone command to clone the empty repository to your local machine. Replace <repository-URL> with the URL of your CodeCommit repository:
+
+git clone <repository-URL>
+
+3.Add and Commit Code:
+
+1)Navigate to the directory where you cloned the repository using the cd command.
+Add your code files to the repository using git add:
+
+git add .
+
+2)Commit your changes with a meaningful commit message:
+
+git commit -m "Your commit message here"
+
+4.Push Your Code:
+
+Push your committed code to the CodeCommit repository using the git push command. Make sure to specify the remote name, usually "origin," and the branch name, typically "main" or "master":
+
+git push origin main
+
+(Replace "main" with the name of your branch if it's different.)
+
+5.Verification: Once the push is successful, you should see a confirmation message in your terminal. Your code is now in your AWS CodeCommit repository. 
+
+
