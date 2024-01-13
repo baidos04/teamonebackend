@@ -1,12 +1,15 @@
-from django.shortcuts import render
 from rest_framework import generics
-from .models import Card
-from .serializers import CardSerializer
+from rest_framework.response import Response
+from rest_framework import status
+from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
+
+from .models import Card
+from .serializers import CardSerializer
 
 
 class CardList(generics.ListAPIView):
@@ -23,10 +26,20 @@ class CardCreate(generics.CreateAPIView):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
 
+    def perform_create(self, serializer):
+        instance = serializer.save()
+
+        send_email(instance)
+
 
 class CardUpdate(generics.UpdateAPIView):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
+
+    def perform_update(self, serializer):
+        updated_instance = serializer.save()
+
+        send_email(updated_instance)
 
 
 class CardDelete(generics.DestroyAPIView):
@@ -39,9 +52,7 @@ class EmailSuccessView(TemplateView):
     template_name = 'success.html'
 
 
-def send_email(request, pk):
-    card = Card.objects.get(pk=pk)
-
+def send_email(card):
     html_message = render_to_string('data.html', {'card': card})
     plain_message = strip_tags(html_message)
 
@@ -52,20 +63,18 @@ def send_email(request, pk):
         to=[card.email_address],
     )
 
-    # Attach прикрепляем файл
+    # Attach the file
     if card.file:
         file = card.file
         email.attach(file.name, file.read())
 
-    # Attach прикрепляем рисунок
+    # Attach the signage
     if card.signage:
         signage = card.signage
         email.attach(signage.name, signage.read())
 
-    # Attach прикрепляем HTML сообщение
+    # Attach HTML message
     email.attach_alternative(html_message, 'text/html')
 
-    # Отправляем email
+    # Send email
     email.send()
-
-    return render(request, 'success.html', )
