@@ -17,7 +17,7 @@ class Card(models.Model):
     phone_number = models.CharField(max_length=100, blank=False, null=False)
     email_address = models.EmailField(max_length=170, blank=False, null=False)
     file = models.FileField(upload_to='files/')
-    signage = models.ImageField(upload_to='signage/')
+    signature = models.ImageField(upload_to='signature/')
 
     def __str__(self):
         return self.company_name

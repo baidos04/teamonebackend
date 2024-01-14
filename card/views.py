@@ -1,7 +1,4 @@
 from rest_framework import generics
-from rest_framework.response import Response
-from rest_framework import status
-from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -69,9 +66,9 @@ def send_email(card):
         email.attach(file.name, file.read())
 
     # Attach the signage
-    if card.signage:
-        signage = card.signage
-        email.attach(signage.name, signage.read())
+    if card.signature:
+        signature = card.signature
+        email.attach(signature.name, signature.read())
 
     # Attach HTML message
     email.attach_alternative(html_message, 'text/html')
