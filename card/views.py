@@ -1,5 +1,4 @@
 from rest_framework import generics
-from django.views.generic import TemplateView
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
@@ -45,10 +44,6 @@ class CardDelete(generics.DestroyAPIView):
 
 
 # Email
-class EmailSuccessView(TemplateView):
-    template_name = 'success.html'
-
-
 def send_email(card):
     html_message = render_to_string('data.html', {'card': card})
     plain_message = strip_tags(html_message)

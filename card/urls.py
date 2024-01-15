@@ -7,5 +7,4 @@ urlpatterns = [
     path('cards/<int:pk>', views.CardDetail.as_view(), name='card-detail'),
     path('cards/<int:pk>/update', views.CardUpdate.as_view(), name='card-update'),
     path('cards/<int:pk>/delete', views.CardDelete.as_view(), name='card-delete'),
-    path('email/success/', views.EmailSuccessView.as_view(), name="success"),
 ]
